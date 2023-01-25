@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { createList } from "./list.services";
-import { verifyToken } from "../../auth/auth.services";
+import { verifyToken, getUserFromToken, JWTDecoded } from "../../auth/auth.services";
 import { getUserFilter, updateUserLists } from "../user/user.services";
 
 export async function handleCreateList(req: Request, res: Response) {
@@ -8,20 +8,10 @@ export async function handleCreateList(req: Request, res: Response) {
   try {
     // verify user token from header
     const userToken = req.headers?.authorization?.split(" ")[1] as string;
-    const decoded = verifyToken(userToken);
+    const decoded = verifyToken(userToken) as JWTDecoded;
 
     // get user by id from token
-    if (typeof decoded !== "object") {
-      return res.status(401).json({ message: "token is not valid" });
-    }
-    if (!decoded.hasOwnProperty("_id")) {
-      return res.status(401).json({ message: "token is not valid" });
-    }
-    const userId = decoded._id;
-    const user = await getUserFilter({ _id: userId });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    const userId = await getUserFromToken(decoded, req, res);
 
     // Create List
     const list = await createList(data);

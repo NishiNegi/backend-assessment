@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { getUserFilter } from "../api/user/user.services";
 
 //Sign Token
 export function signToken(payload: any) {
@@ -47,4 +48,29 @@ export function isAuthenticated(
 
   next();
   return true;
+}
+
+// Get user by id from token
+export interface JWTDecoded {
+  _id: string,
+  email: string,
+  iat: number,
+}
+export async function getUserFromToken(decoded: JWTDecoded, req: Request, res: Response) {
+  try {
+    if (typeof decoded !== "object") {
+      throw new Error("token is not valid");
+    }
+    if (!decoded.hasOwnProperty("_id")) {
+      throw new Error("token is not valid");
+    }
+    const userId:string = decoded._id;
+    const user = await getUserFilter({ _id: userId });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return userId;
+  } catch(err:any) {
+    return err.message;
+  }
 }
