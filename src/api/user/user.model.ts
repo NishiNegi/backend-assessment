@@ -63,11 +63,9 @@ async function comparePassword(
   candidatePassword: string,
   next: Function
 ): Promise<boolean> {
-  console.log('in comparePassword');
   const user = this;
 
   try {
-    console.log(candidatePassword, user.password);
     const match = await bcrypt.compare(candidatePassword, user.password);
 
     return match;
