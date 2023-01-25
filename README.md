@@ -123,6 +123,13 @@ For users to create a new fav item, send a POST http request to `/api/favsd` wit
 
 `title` and `description` are required, but link can be absent of the previous format.
 
+Remember that only users who have logged in can create their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers. If token is not included, or is not correct, server will send an error message as follow:
+```json
+{
+    "message": "invalid user token"
+}
+```
+
 If creation is successful, server will return a status 200 with the following json message:
 
 ```json
