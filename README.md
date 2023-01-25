@@ -106,6 +106,7 @@ If creation is successful, server will return a status 200 with the following js
   "__v": 0
 }
 ```
+New list is automatically added to the user's lists.
 
 ### Favs
 
