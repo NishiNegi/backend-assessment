@@ -1,14 +1,20 @@
 import { Router } from "express";
 import {isAuthenticated} from "../../auth/auth.services"
-import {handleCreateList} from "./list.controller"
+import {
+    handleCreateList,
+    handleGetAllLists,
+} from "./list.controller"
 
 const router = Router();
 
 // POST api/lists/  Creates a list
 router.post("/", isAuthenticated, handleCreateList);
 
+// GET api/lists  Reads all user's list
+router.get("/", isAuthenticated, handleGetAllLists);
+
 // GET api/lists/:id  Reads a specific list
-// router.get("/", handleCreateUser);
+// router.get("/:id", handleG);
 
 // PATCH api/lists/:id  Updates a specific list
 // router.patch("/", handleCreateUser);

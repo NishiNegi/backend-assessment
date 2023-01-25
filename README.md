@@ -11,8 +11,7 @@ _Favs_ is a new company that aims to provide a better way to organize your favor
   - [Users' Login](#users-login)
 - [Lists](#lists)
   - [Create a list](#create-a-list)
-- [Favs](#favs)
-  - [Create a fav item](#create-a-fav-item)
+  - [Consult a user's lists](#consult-a-users-lists)
 
 ## Endpoints
 
@@ -80,7 +79,7 @@ If login is successful, server will return a status 200 with the following json 
 
 #### Create a list
 
-For users to create a new list, send a POST http request to `/api/lists` with the list's name in the following json structure:
+For users to create a new list, send a POST http request to `/api/favs` with the list's name in the following json structure:
 
 ```json
 {
@@ -108,39 +107,37 @@ If creation is successful, server will return a status 200 with the following js
 ```
 New list is automatically added to the user's lists.
 
-### Favs
+#### Consult a user's lists
 
-#### Create a fav item
+For users to consult their lists, send a GET http request to `/api/favs`.
 
-For users to create a new fav item, send a POST http request to `/api/favsd` with the list's name in the following json structure:
+Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+
+If the user is verified and has lists, server will return a status 200 with the following json message:
 
 ```json
-{
-  "title": "title of the item",
-  "description": "description of the item",
-  "link": "link for the item"
-}
+[
+    {
+        "_id": "list 1 id",
+        "name": "list 1 name",
+        "items": [],
+        "createdAt": "list 1 creation date",
+        "updatedAt": "list 1 update date",
+        "__v": 0
+    },
+    {
+        "_id": "list 2 id",
+        "name": "list 2 name",
+        "items": [],
+        "createdAt": "list 2 creation date",
+        "updatedAt": "list 2 update date",
+        "__v": 0
+    }
+    ...
+]
 ```
-
-`title` and `description` are required, but link can be absent of the previous format.
-
-Remember that only users who have logged in can create their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers. If token is not included, or is not correct, server will send an error message as follow:
-```json
-{
-    "message": "invalid user token"
-}
-```
-
-If creation is successful, server will return a status 200 with the following json message:
+Otherwise, if user doesn't have any list, json response will be an empty array:
 
 ```json
-{
-  "title": "title of the item",
-  "description": "description of the item",
-  "link": "link for the item",
-  "_id": "item id",
-  "createdAt": "creation date",
-  "updatedAt": "creation date",
-  "__v": 0
-}
+[]
 ```

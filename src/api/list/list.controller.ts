@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createList } from "./list.services";
+import { createList, getUserLists } from "./list.services";
 import { verifyToken, getUserFromToken, JWTDecoded } from "../../auth/auth.services";
 import { updateUserLists } from "../user/user.services";
 
@@ -23,4 +23,33 @@ export async function handleCreateList(req: Request, res: Response) {
   } catch (error) {
     return res.status(500).json(error);
   }
+}
+
+export async function handleGetAllLists(req: Request, res: Response){
+  try {
+    // verify user token from header
+    const userToken = req.headers?.authorization?.split(" ")[1] as string;
+    const decoded = verifyToken(userToken) as JWTDecoded;
+
+    // get user by id from token
+    const userId = await getUserFromToken(decoded, req, res);
+
+    // get user's lists
+    const user = await getUserLists(userId)
+    if (!user)
+    {
+      return res.status(404).json({message: "User doesn't exist."})
+    }
+    if(!user.lists)
+    {
+      return res.status(404).json({message: "user don't have any list yet. "});
+    }
+    const lists = user.lists;
+
+    return res.status(200).json(lists);
+
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+
 }
