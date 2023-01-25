@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import crypto from "crypto";
 import { createUser } from "./user.services";
 
 export async function handleCreateUser(req: Request, res: Response) {

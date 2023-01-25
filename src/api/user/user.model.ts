@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
+import { userProfileType } from "./user.types";
 import bcrypt from "bcryptjs";
-
 
 export interface UserDocument extends Document{
   email:string,
@@ -9,6 +9,8 @@ export interface UserDocument extends Document{
 
   createdAt: Date;
   updatedAt: Date;
+
+  profile: userProfileType;
 
   comparePassword: (password: string) => Promise<boolean>;
 }
@@ -44,7 +46,16 @@ UserSchema.pre("save", async function save(next: Function) {
     next(error);
   }
 });
-const User = model<UserDocument>("User", UserSchema);
+
+// Virtuals
+UserSchema.virtual('profile').get(function profile() {
+  const {_id, email} = this;
+
+  return {
+    _id, email
+  };
+
+});
 
 //Methods
 async function comparePassword(
@@ -52,6 +63,7 @@ async function comparePassword(
   candidatePassword: string,
   next: Function
 ): Promise<boolean> {
+  console.log('in comparePassword');
   const user = this;
 
   try {
@@ -65,5 +77,7 @@ async function comparePassword(
   }
 }
 UserSchema.methods.comparePassword = comparePassword;
+
+const User = model<UserDocument>("User", UserSchema);
 
 export default User;
