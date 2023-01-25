@@ -73,3 +73,30 @@ If creation is successful, server will return a status 200 with the following js
     "__v": 0
 }
 ```
+
+### Favs
+#### Create a fav item
+
+For users to create a new fav item, send a POST http request to `/api/favsd` with the list's name in the following json structure:
+```json
+{
+    {
+  "title": "title of the item",
+  "description": "description of the item",
+  "link": "link for the item"}
+}
+```
+`title` and `description` are required, but link can be absent of the previous format.
+
+If creation is successful, server will return a status 200 with the following json message:
+```json
+{
+    "title": "title of the item",
+    "description": "description of the item",
+    "link": "link for the item",
+    "_id": "item id",
+    "createdAt": "creation date",
+    "updatedAt": "creation date",
+    "__v": 0
+}
+```
