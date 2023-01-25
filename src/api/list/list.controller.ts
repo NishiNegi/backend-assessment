@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { createList } from "./list.services";
 import { verifyToken, getUserFromToken, JWTDecoded } from "../../auth/auth.services";
-import { getUserFilter, updateUserLists } from "../user/user.services";
+import { updateUserLists } from "../user/user.services";
 
 export async function handleCreateList(req: Request, res: Response) {
   const data = req.body;

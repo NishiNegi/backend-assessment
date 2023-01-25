@@ -1,4 +1,4 @@
-import {DocumentDefinition, FilterQuery, ObjectId} from "mongoose";
+import mongoose, {DocumentDefinition, FilterQuery, ObjectId} from "mongoose";
 import User, {UserDocument} from './user.model';
 
 // Create user
@@ -18,6 +18,7 @@ export function updateUser(id: string, user: DocumentDefinition<Omit<UserDocumen
 
 // add a list to user
 export function updateUserLists(userId: string, listId: string) {
-  const user = { $push: { lists: listId } };
+  const listIdObject = new mongoose.Types.ObjectId(listId);
+  const user = { $push: { lists: listIdObject } };
   return User.updateOne({ _id: userId }, user);
 }

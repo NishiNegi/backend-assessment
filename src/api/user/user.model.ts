@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export interface UserDocument extends Document{
   email:string,
   password:string,
-  lists?:string[]
+  lists?:object[]
 
   createdAt: Date;
   updatedAt: Date;
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  lists: [{ type: String }],
+  lists: [{ type: Schema.Types.ObjectId, ref: "List" }],
 },
 {
   timestamps: true,
