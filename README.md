@@ -12,10 +12,10 @@ _Favs_ is a new company that aims to provide a better way to organize your favor
 - [Lists](#lists)
   - [Create a list](#create-a-list)
   - [Consult a user's lists](#consult-a-users-lists)
+  - [Consult a specific list](#consult-a-specific-list)
 
-## Endpoints
 
-### Create Users
+## Create Users
 
 To create a new user, send a POST http request to `/api/users` with the user's information in the following json structure:
 
@@ -36,7 +36,7 @@ Password should contain at least a number and a capital letter. If the password 
 
 User's email should not be already included in the database. Otherwise, server will return an **error 500**.
 
-### Users' Login
+## Users' Login
 
 For users to login, send a POST http request to `/auth/local/login` with the user's information in the following json structure:
 
@@ -75,9 +75,9 @@ If login is successful, server will return a status 200 with the following json 
 }
 ```
 
-### Lists
+## Lists
 
-#### Create a list
+### Create a list
 
 For users to create a new list, send a POST http request to `/api/favs` with the list's name in the following json structure:
 
@@ -107,7 +107,7 @@ If creation is successful, server will return a status 200 with the following js
 ```
 New list is automatically added to the user's lists.
 
-#### Consult a user's lists
+### Consult a user's lists
 
 For users to consult their lists, send a GET http request to `/api/favs`.
 
@@ -140,4 +140,28 @@ Otherwise, if user doesn't have any list, json response will be an empty array:
 
 ```json
 []
+```
+### Consult a specific list
+
+For users to consult a specific list, send a GET http request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
+
+Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+
+If the user is verified and has the list in their data, server will return a status 200 with the following json message:
+
+```json
+{
+    "_id": "list id",
+    "name": "list name",
+    "items": [],
+    "createdAt": "creation date",
+        "updatedAt": "update date",
+    "__v": 0
+}
+```
+If a user attempts to consult a list is not theirs, server will return a status 401 with the following json message:
+```json
+{
+    "message": "user is not authorized to consult this list"
+}
 ```

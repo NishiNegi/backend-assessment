@@ -3,6 +3,7 @@ import {isAuthenticated} from "../../auth/auth.services"
 import {
     handleCreateList,
     handleGetAllLists,
+    handleGetList,
 } from "./list.controller"
 
 const router = Router();
@@ -14,7 +15,7 @@ router.post("/", isAuthenticated, handleCreateList);
 router.get("/", isAuthenticated, handleGetAllLists);
 
 // GET api/lists/:id  Reads a specific list
-// router.get("/:id", handleG);
+router.get("/:id", handleGetList);
 
 // PATCH api/lists/:id  Updates a specific list
 // router.patch("/", handleCreateUser);

@@ -11,3 +11,13 @@ export function createList(list:DocumentDefinition<Omit<ListDocument, 'createdAt
 export function getUserLists(userId: string) {
     return User.findById(userId).populate("lists").exec();
   }
+
+  // Get a specific list
+export function getListById(listId: string) {
+    return List.findById(listId);
+  }
+
+// Check if a list is in user's lists
+export function isListInUsers(listId: string, userLists: any[]): boolean {
+    return userLists.some(item => item._id.toString() === listId);
+}
