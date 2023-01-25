@@ -1,10 +1,11 @@
 import { Router } from "express";
+import {isAuthenticated} from "../../auth/auth.services"
 import {handleCreateList} from "./list.controller"
 
 const router = Router();
 
 // POST api/lists/  Creates a list
-router.post("/", handleCreateList);
+router.post("/", isAuthenticated, handleCreateList);
 
 // GET api/lists/:id  Reads a specific list
 // router.get("/", handleCreateUser);
