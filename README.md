@@ -13,6 +13,7 @@ _Favs_ is a new company that aims to provide a better way to organize your favor
   - [Create a list](#create-a-list)
   - [Consult a user's lists](#consult-a-users-lists)
   - [Consult a specific list](#consult-a-specific-list)
+  - [Delete a specific list](#delete-a-specific-list)
 
 
 ## Create Users
@@ -163,5 +164,24 @@ If a user attempts to consult a list is not theirs, server will return a status 
 ```json
 {
     "message": "user is not authorized to consult this list"
+}
+```
+### Delete a specific list
+
+For users to delete a specific list, send a DELETE http request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
+
+Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+
+If the user is verified and has the list in their data, server will return a status 200 with the following json message:
+
+```json
+{
+    "message": "List has been removed."
+}
+```
+If a user attempts to delete a list is not theirs, server will return a status 401 with the following json message:
+```json
+{
+    "message": "user is not authorized to delete this list"
 }
 ```

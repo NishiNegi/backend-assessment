@@ -21,3 +21,7 @@ export function getListById(listId: string) {
 export function isListInUsers(listId: string, userLists: any[]): boolean {
     return userLists.some(item => item._id.toString() === listId);
 }
+// Delete a specific list
+export function deleteList(id: string) {
+    return List.findByIdAndRemove(id);
+  }
