@@ -27,6 +27,6 @@ export function deleteList(id: string) {
   }
 // Update a specific list favs
 export function updateFavs(listId: string, fav: FavDocument){
-  console.log(List.findByIdAndUpdate(listId, { $push: { items: fav } }))
-  return List.findByIdAndUpdate(listId, { $push: { items: fav } });
+  
+  return List.findByIdAndUpdate(listId, { $push: { items: fav } }).exec();
 }

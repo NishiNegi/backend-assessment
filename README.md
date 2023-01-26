@@ -14,11 +14,27 @@ _Favs_ is a new company that aims to provide a better way to organize your favor
   - [Consult a user's lists](#consult-a-users-lists)
   - [Consult a specific list](#consult-a-specific-list)
   - [Delete a specific list](#delete-a-specific-list)
+  - [Add a fav to a list](#add-a-fav-to-a-list)
 
+## Overview
+
+This creates a backend server for _Favs_. It creates a server with certain endpoints so users can carry out the actions tat the client specified such as register, log in, create lists, etc. Tun run the server locally, download the files and, in a console window go to the folder an run the following comand:
+```
+npm run install
+```
+It will install all the project dependencies. Once it is done, run the following command:
+```
+npm run dev
+```
+Iv everything is OK, the command window wil display the following messages:
+```
+Server is running on port 8080
+Connected to database
+```
 
 ## Create Users
 
-To create a new user, send a POST http request to `/api/users` with the user's information in the following json structure:
+To create a new user, send a POST HTTP request to `/api/users` with the user's information in the following JSON structure:
 
 ```json
 {
@@ -27,7 +43,7 @@ To create a new user, send a POST http request to `/api/users` with the user's i
 }
 ```
 
-Password should contain at least a number and a capital letter. If the password does not comply with these requirements, server will return following message:
+Password should contain at least a number and a capital letter. If the password does not comply with these requirements, the server will return the following message:
 
 ```json
 {
@@ -35,11 +51,11 @@ Password should contain at least a number and a capital letter. If the password 
 }
 ```
 
-User's email should not be already included in the database. Otherwise, server will return an **error 500**.
+The user's email should not be already included in the database. Otherwise, the server will return an **error 500**.
 
 ## Users' Login
 
-For users to login, send a POST http request to `/auth/local/login` with the user's information in the following json structure:
+For users to log in, send a POST HTTP request to `/auth/local/login` with the user's information in the following JSON structure:
 
 ```json
 {
@@ -48,7 +64,7 @@ For users to login, send a POST http request to `/auth/local/login` with the use
 }
 ```
 
-If user is not registered in the database, server will return an error 404 with the following json message:
+If a user is not registered in the database, the server will return an error 404 with the following JSON message:
 
 ```json
 {
@@ -56,7 +72,7 @@ If user is not registered in the database, server will return an error 404 with 
 }
 ```
 
-If password is not the same as user registered, server will return an error 404 with the following json message:
+If the password is not the same as the user registered, the server will return an error 404 with the following JSON message:
 
 ```json
 {
@@ -64,7 +80,7 @@ If password is not the same as user registered, server will return an error 404 
 }
 ```
 
-If login is successful, server will return a status 200 with the following json message:
+If login is successful, the server will return a status 200 with the following JSON message:
 
 ```json
 {
@@ -80,21 +96,21 @@ If login is successful, server will return a status 200 with the following json 
 
 ### Create a list
 
-For users to create a new list, send a POST http request to `/api/favs` with the list's name in the following json structure:
+For users to create a new list, send a POST HTTP request to `/api/favs` with the list's name in the following JSON structure:
 
 ```json
 {
   "name": "list name"
 }
 ```
-Remember that only users who have logged in can create their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers. If token is not included, or is not correct, server will send an error message as follow:
+Remember that only users who have logged in can create their lists. That is why you must include the [token provided on the login](#users-login) in the request headers. If the token is not included or is not correct, the server will send an error message as follow:
 ```json
 {
     "message": "invalid user token"
 }
 ```
 
-If creation is successful, server will return a status 200 with the following json message:
+If creation is successful, the server will return a status 200 with the following JSON message:
 
 ```json
 {
@@ -106,15 +122,15 @@ If creation is successful, server will return a status 200 with the following js
   "__v": 0
 }
 ```
-New list is automatically added to the user's lists.
+The new list is automatically added to the user's lists.
 
 ### Consult a user's lists
 
-For users to consult their lists, send a GET http request to `/api/favs`.
+For users to consult their lists, send a GET HTTP request to `/api/favs`.
 
-Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+Only users who have logged in can consult their lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
 
-If the user is verified and has lists, server will return a status 200 with the following json message:
+If the user is verified and has lists, the server will return a status 200 with the following JSON message:
 
 ```json
 [
@@ -134,21 +150,20 @@ If the user is verified and has lists, server will return a status 200 with the 
         "updatedAt": "list 2 update date",
         "__v": 0
     }
-    ...
 ]
 ```
-Otherwise, if user doesn't have any list, json response will be an empty array:
+Otherwise, if the user doesn't have any list, the JSON response will be an empty array:
 
 ```json
 []
 ```
 ### Consult a specific list
 
-For users to consult a specific list, send a GET http request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
+For users to consult a specific list, send a GET HTTP request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
 
-Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+Only users who have logged in can consult their lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
 
-If the user is verified and has the list in their data, server will return a status 200 with the following json message:
+If the user is verified and has the list in their data, the server will return a status 200 with the following JSON message:
 
 ```json
 {
@@ -160,7 +175,7 @@ If the user is verified and has the list in their data, server will return a sta
     "__v": 0
 }
 ```
-If a user attempts to consult a list is not theirs, server will return a status 401 with the following json message:
+If a user attempts to consult a list that is not theirs, the server will return a status 401 with the following JSON message:
 ```json
 {
     "message": "user is not authorized to consult this list"
@@ -168,20 +183,51 @@ If a user attempts to consult a list is not theirs, server will return a status 
 ```
 ### Delete a specific list
 
-For users to delete a specific list, send a DELETE http request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
+For users to delete a specific list, send a DELETE HTTP request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
 
-Only users who have logged in can consult their own lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+Only users who have logged in can consult their lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
 
-If the user is verified and has the list in their data, server will return a status 200 with the following json message:
+If the user is verified and has the list in their data, the server will return a status 200 with the following JSON message:
 
 ```json
 {
     "message": "List has been removed."
 }
 ```
-If a user attempts to delete a list is not theirs, server will return a status 401 with the following json message:
+If a user attempts to delete a list that is not theirs, the server will return a status 401 with the following JSON message:
 ```json
 {
     "message": "user is not authorized to delete this list"
+}
+```
+### Add a fav to a list
+
+For users to add a fav in a specific list, send a PATCH HTTP request to `/api/favs/<id>`. Replace `<id>` with the id of the specific list.
+
+Only users who have logged in can consult their lists. That is why you must include the [token provided on the login](#users-login) in the request headers.
+
+If the user is verified and has the list in their data, the server will return a status 200 with the list updated in the following JSON message:
+
+```json
+{
+    "_id": "List id",
+    "name": "list name",
+    "items": [
+        {
+            "_id": "item id",
+            "title": "item title",
+            "description": "item description",
+            "link": "item link"
+        }
+    ],
+    "createdAt": "list creation date",
+    "updatedAt": "las list update date",
+    "__v": 0
+}
+```
+If a user attempts to edit a list that is not theirs, the server will return a status 401 with the following JSON message:
+```json
+{
+    "message": "user is not authorized to update this list"
 }
 ```

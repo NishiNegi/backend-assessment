@@ -20,7 +20,6 @@ export async function handleLogin(
     }
 
     const validPassword = await user.comparePassword(password);
-    console.log(user.comparePassword);
     if (!validPassword) {
       return res.status(401).json({ message: "Invalid password" });
     }

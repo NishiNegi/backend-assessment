@@ -151,14 +151,13 @@ export async function handleUpdateItems(req: Request, res: Response) {
     const userToken = req.headers?.authorization?.split(" ")[1] as string;
     
     const decoded = verifyToken(userToken) as JWTDecoded;
-    
     // get user by id from token
     const userId = await getUserFromToken(decoded);
-    
     //get list
-    const list = await getListById(id);
+    let list = await getListById(id);
     //get user's data
     const user = await getUserLists(userId);
+
 
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist." });
@@ -175,14 +174,14 @@ export async function handleUpdateItems(req: Request, res: Response) {
     if (!exist) {
       return res
         .status(401)
-        .json({ message: "user is not authorized to consult this list" });
+        .json({ message: "user is not authorized to update this list" });
     }
     // Include items in list
     const newItem = req.body;
     
-    const addItem = updateFavs(id, newItem);
-    
-    return res.status(200).json(addItem);
+    const addItem = await updateFavs(id, newItem);
+    list = await getListById(id);
+    return res.status(200).json(list);
   } catch (error) {
     return res.status(500).json(error);
   }
