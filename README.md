@@ -1,20 +1,20 @@
 In response to [Make It Real Top-v25](https://github.com/makeitrealcamp/top-v25) backend assessment.
 
 # FAVS API
+![Favs logo](./favs.png)
 
 _Favs_ is a new company that aims to provide a better way to organize your favorite things: music, clothes, courses, etc., all in one place.
 
 ## Table of contents
 
-- [Endpoints](#endpoints)
-  - [Create Users](#create-users)
-  - [Users' Login](#users-login)
-- [Lists](#lists)
-  - [Create a list](#create-a-list)
-  - [Consult a user's lists](#consult-a-users-lists)
-  - [Consult a specific list](#consult-a-specific-list)
-  - [Delete a specific list](#delete-a-specific-list)
-  - [Add a fav to a list](#add-a-fav-to-a-list)
+- [Overview](#overview)
+- [Create Users](#create-users)
+- [Users' Login](#users-login)
+- [Create a list](#create-a-list)
+- [Consult a user's lists](#consult-a-users-lists)
+- [Consult a specific list](#consult-a-specific-list)
+- [Delete a specific list](#delete-a-specific-list)
+- [Add a fav to a list](#add-a-fav-to-a-list)
 
 ## Overview
 
@@ -31,6 +31,9 @@ Iv everything is OK, the command window wil display the following messages:
 Server is running on port 8080
 Connected to database
 ```
+
+To test endpoints you can use any software tool to make HTTP requests such as [Postman](https://web.postman.co).
+
 
 ## Create Users
 
