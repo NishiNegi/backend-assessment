@@ -4,7 +4,8 @@ import {
     handleCreateList,
     handleGetAllLists,
     handleGetList,
-    handleDeleteList
+    handleDeleteList,
+    handleUpdateItems,
 } from "./list.controller"
 
 const router = Router();
@@ -18,8 +19,8 @@ router.get("/", isAuthenticated, handleGetAllLists);
 // GET api/lists/:id  Reads a specific list
 router.get("/:id", isAuthenticated, handleGetList);
 
-// PATCH api/lists/:id  Updates a specific list
-// router.patch("/", handleCreateUser);
+// PATCH api/lists/:id  Updates a specific list's items
+router.patch("/:id", isAuthenticated, handleUpdateItems);
 
 // DELETE api/lists/:id  Deletes a specific list
 router.delete("/:id", isAuthenticated, handleDeleteList);

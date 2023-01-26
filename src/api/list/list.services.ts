@@ -1,5 +1,5 @@
 import {DocumentDefinition, FilterQuery} from "mongoose";
-import List, {ListDocument} from './list.model';
+import List, {ListDocument, FavDocument} from './list.model';
 import User from '../user/user.model'
 
 // Create a list
@@ -25,3 +25,8 @@ export function isListInUsers(listId: string, userLists: any[]): boolean {
 export function deleteList(id: string) {
     return List.findByIdAndRemove(id);
   }
+// Update a specific list favs
+export function updateFavs(listId: string, fav: FavDocument){
+  console.log(List.findByIdAndUpdate(listId, { $push: { items: fav } }))
+  return List.findByIdAndUpdate(listId, { $push: { items: fav } });
+}
