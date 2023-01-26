@@ -56,7 +56,7 @@ export interface JWTDecoded {
   email: string,
   iat: number,
 }
-export async function getUserFromToken(decoded: JWTDecoded, req: Request, res: Response) {
+export async function getUserFromToken(decoded: JWTDecoded) {
   try {
     if (typeof decoded !== "object") {
       throw new Error("token is not valid");

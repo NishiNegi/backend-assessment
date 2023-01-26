@@ -22,7 +22,7 @@ export async function handleCreateList(req: Request, res: Response) {
     const decoded = verifyToken(userToken) as JWTDecoded;
 
     // get user by id from token
-    const userId = await getUserFromToken(decoded, req, res);
+    const userId = await getUserFromToken(decoded);
 
     // Create List
     const list = await createList(data);
@@ -43,7 +43,7 @@ export async function handleGetAllLists(req: Request, res: Response) {
     const decoded = verifyToken(userToken) as JWTDecoded;
 
     // get user by id from token
-    const userId = await getUserFromToken(decoded, req, res);
+    const userId = await getUserFromToken(decoded);
 
     // get user's lists
     const user = await getUserLists(userId);
@@ -72,7 +72,7 @@ export async function handleGetList(req: Request, res: Response) {
     const decoded = verifyToken(userToken) as JWTDecoded;
 
     // get user by id from token
-    const userId = await getUserFromToken(decoded, req, res);
+    const userId = await getUserFromToken(decoded);
 
     //get list
     const list = await getListById(id);
@@ -111,7 +111,7 @@ export async function handleDeleteList(req: Request, res: Response) {
     const decoded = verifyToken(userToken) as JWTDecoded;
 
     // get user by id from token
-    const userId = await getUserFromToken(decoded, req, res);
+    const userId = await getUserFromToken(decoded);
 
     //get list
     const list = await getListById(id);
@@ -153,7 +153,7 @@ export async function handleUpdateItems(req: Request, res: Response) {
     const decoded = verifyToken(userToken) as JWTDecoded;
     
     // get user by id from token
-    const userId = await getUserFromToken(decoded, req, res);
+    const userId = await getUserFromToken(decoded);
     
     //get list
     const list = await getListById(id);
